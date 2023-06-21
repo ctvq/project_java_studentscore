@@ -14,11 +14,11 @@ public class Users_ReplyDAO implements DAOinterface<users_reply> {
         Connection conn = ConnectDatabase.Connect();
         try {
             Statement statement = conn.createStatement();
-            String sql ="INSERT INTO users_reply(users_reply_id,users_id,question_id,answer_id) "+"values " +
-                    "("+"'"+usersReply.getUsers_reply_id()+"',"+
-                    "("+"'"+usersReply.getUsers_id()+"',"+
-                    "("+"'"+usersReply.getQuestion_id()+"',"+
-                    "("+"'"+usersReply.getAnswer_id()+ "')";
+            String sql ="INSERT INTO users_reply(users_reply_id,users_id,question_id,answer_id) "+"values ("
+                    +"'"+usersReply.getUsers_reply_id()+"',"
+                    +"'"+usersReply.getUsers_id()+"',"
+                    +"'"+usersReply.getQuestion_id()+"',"
+                    +"'"+usersReply.getAnswer_id()+ "')";
             System.out.println(sql);
             int kq =  statement.executeUpdate(sql);
             if(kq!=0) System.out.println("Insert successfully !");
