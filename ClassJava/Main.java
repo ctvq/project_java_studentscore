@@ -153,9 +153,7 @@ public class Main {
                                         randoma = answer_idl.get(random_a_index);
                                         c[i] = randoma;
                                     }
-                                    System.out.println(a[i] + "-" + b[i] + "-" + c[i]);
-
-                                    System.out.println(i);
+                                    System.out.println(a[i] + "-" + b[i]+"-"+c[i]);
                                     if (i == 0) {
                                         if (!users_idl.isEmpty() && !question_idl.isEmpty() && !answer_idl.isEmpty()) {
                                             users_reply ur = new users_reply((id_start + i), randomu, randomq, randoma);
@@ -168,7 +166,7 @@ public class Main {
                                                 if (a[i] != a[j] || b[i] != b[j] || c[i] != c[j]) {
                                                     dem++;
                                                 } else {
-                                                    System.out.print("so bi trung lap");
+                                                    System.out.println ("số random bị trùng lặp");
                                                     break;
                                                 }
                                                 if (dem == i) {
@@ -198,10 +196,8 @@ public class Main {
                                         randomq = question_idl.get(random_q_index);
                                         b[i] = randomq;
                                     }
-                                    System.out.println(a[i] + "-" + b[i]);
+                                    System.out.println(b[i] + "-" + a[i]);
 
-
-                                    System.out.println(i);
                                     if (i == 0) {
                                         if (!examination_idl.isEmpty() && !question_idl.isEmpty()) {
                                             examination_nn_question unc = new examination_nn_question(randomq, randome);
@@ -211,11 +207,10 @@ public class Main {
                                         int dem = 0;
                                         for (int j = i - 1; j >= 0; j--) {
                                             if (i > 0) {
-                                                System.out.print(11111);
                                                 if (a[i] != a[j] || b[i] != b[j]) {
                                                     dem++;
                                                 } else {
-                                                    System.out.print("so bi trung lap");
+                                                    System.out.print("số random bị trùng lặp");
                                                     break;
                                                 }
                                                 if (dem == i) {
@@ -224,7 +219,6 @@ public class Main {
                                                         handle_exnnqs.insert(exnnq);
                                                     }
                                                 } else {
-                                                    System.out.print("hi");
                                                 }
                                             }
                                         }
@@ -244,6 +238,7 @@ public class Main {
                                         randomc = course_idl.get(random_c_index);
                                         b[i] = randomc;
                                     }
+                                    System.out.println(a[i] + "-" + b[i]);
                                     if (i == 0) {
                                         if (!course_idl.isEmpty() && !users_idl.isEmpty()) {
                                             users_nn_course unc = new users_nn_course((id_start + i), randomu, randomc);
@@ -253,11 +248,10 @@ public class Main {
                                         int dem = 0;
                                         for (int j = i - 1; j >= 0; j--) {
                                             if (i > 0) {
-                                                System.out.print(11111);
                                                 if (a[i] != a[j] || b[i] != b[j]) {
                                                     dem++;
                                                 } else {
-                                                    System.out.print("so bi trung lap");
+                                                    System.out.print("số random bị trùng lặp");
                                                     break;
                                                 }
                                                 if (dem == i) {
