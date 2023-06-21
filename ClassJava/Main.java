@@ -13,8 +13,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws SQLException {
-        List<users> userList = new ArrayList<>();
-        List<course> coursesList = new ArrayList<>();
 
         AnswerDAO handle_answer = new AnswerDAO();
         CourseDAO handle_course = new CourseDAO();
@@ -30,7 +28,6 @@ public class Main {
         List<Integer> course_idl = new ArrayList<>();
         List<Integer> examination_idl = new ArrayList<>();
         List<Integer> question_idl = new ArrayList<>();
-        List<Integer> users_reply_idl = new ArrayList<>();
         List<Integer> users_idl = new ArrayList<>();
 
         Scanner sc = new Scanner(System.in);
@@ -79,7 +76,6 @@ public class Main {
                                 if (tableName.equals("users")) {
                                     int users_id = id_start + i;
                                     users users1 = new users(users_id, "quyet " + i, "1" + i, (21 + i), "nam " + i, "vu van quyet" + i);
-                                    userList.add(users1);
                                     handle_users.insert(users1);
                                     users_idl.add(users_id);
                                 }
@@ -188,7 +184,6 @@ public class Main {
                                     if (!examination_idl.isEmpty()) {
                                         int random_e_idl = random.nextInt(examination_idl.size());
                                         randome = examination_idl.get(random_e_idl);
-
                                         a[i] = randome;
                                     }
                                     if (!question_idl.isEmpty()) {
