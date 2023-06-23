@@ -5,10 +5,7 @@ import src.Manager_Score.HandleSQL.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -16,10 +13,10 @@ public class Main {
 
         AnswerDAO handle_answer = new AnswerDAO();
         CourseDAO handle_course = new CourseDAO();
-        Examination_nn_QuestionDAO handle_exnnqs =new  Examination_nn_QuestionDAO();
-        ExaminationDAO handle_examination=new ExaminationDAO();
+        Examination_nn_QuestionDAO handle_exnnqs = new Examination_nn_QuestionDAO();
+        ExaminationDAO handle_examination = new ExaminationDAO();
         QuestionDAO handle_question = new QuestionDAO();
-        Users_nn_CourseDAO handle_unnc = new  Users_nn_CourseDAO();
+        Users_nn_CourseDAO handle_unnc = new Users_nn_CourseDAO();
         Users_ReplyDAO handle_ur = new Users_ReplyDAO();
         UsersDAO handle_users = new UsersDAO();
 
@@ -32,70 +29,81 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         int chose = 100;
-
-        int increase_value=1;
+        int numberofline = 0;
+        int increase_value = 1;
 
         int randomu = 1;
         int randomc = 1;
-        int randome=1;
-        int randomq=1;
-        int randoma=1;
-
-        int a[]= new  int[100];
-        int b[]= new  int[100];
-        int c[]= new  int[100];
-
+        int randome = 1;
+        int randomq = 1;
+        int randoma = 1;
+        int i11 = 0;
+        int a[] = new int[1000];
+        int b[] = new int[1000];
+        int c[] = new int[1000];
+        int id_q[] = new int[1000];
+        int nuberUsers = 0;
+        int numberQuestion = 0;
+        int x = 0, y = 0;
+        int[][] arrays = new int[x][y];
+        int dt = 0;
         while (chose != 0) {
-            System.out.println("OPTION FUNCTIONS" +
-                    "\n1." + "\"" + "insert" + "\"" + " information into the table " +
-                    "\n2." + "\"" + "update" + "\"" + " information into the table " +
-                    "\n3." + "\"" + "delete" + "\"" + " information into the table " +
-                    "\n0." + "\"" + "stop" + "\"" + " to exist program");
-            System.out.print("You select number function :");
-            chose = sc.nextInt();sc.nextLine();
+            try {
+                System.out.println("OPTION FUNCTIONS" +
+                        "\n1." + "\"" + "insert" + "\"" + " information into the table " +
+                        "\n2." + "\"" + "update" + "\"" + " information into the table " +
+                        "\n3." + "\"" + "delete" + "\"" + " information into the table " +
+                        "\n0." + "\"" + "stop" + "\"" + " to exist program");
+                System.out.print("You select number function :");
+                if (dt != 0) sc.nextLine();
+                dt++;
+                chose = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Lỗi cú pháp: ");
+            }
             if (chose == 1) {
                 int chose1 = 0;
                 try {
                     do {
+                        int chose_function = 0;
+                        String tableName = "";
+
+
                         System.out.print(" The table name that you want to insert date is : ");
-                        String tableName = sc.nextLine();
+                        tableName = sc.nextLine();
 
                         System.out.println(" Chọn 1 Bạn muốn nhập tự động ( Tự tăng các thông số ) " +
                                 "\n  Chọn 2 Thêm dữ liệu cụ thể ");
-                        int chose_function = sc.nextInt();
+                        chose_function = sc.nextInt();
                         sc.nextLine();
-
                         if (chose_function == 1) {
-                            System.out.print("Số dòng mà bạn muốn thêm là :");
-                            int numberofline = sc.nextInt();
-                            sc.nextLine();
+                            if (tableName.equals("answer") == false && tableName.equals("users_reply") == false) {
+                                System.out.print("Số dòng mà bạn muốn thêm là :");
+                                numberofline = sc.nextInt();
+                                sc.nextLine();
+                            } else numberofline = 1;
                             System.out.print("Mã bắt đầu là từ :");
                             int id_start = sc.nextInt();
                             for (int i = 0; i < numberofline; i++) {
 
                                 if (tableName.equals("users")) {
+                                    List<String> gender = new ArrayList<>();
+                                    gender.add("nam");
+                                    gender.add("nữ");
+                                    int s = random.nextInt(gender.size());
+                                    String gender_rd = gender.get(s);
                                     int users_id = id_start + i;
-                                    users users1 = new users(users_id, "quyet " + i, "1" + i, (21 + i), "nam " + i, "vu van quyet" + i);
+                                    users users1 = new users(users_id, "quyet " + i, "1" + i, (21 + i), gender_rd, "vu van quyet" + i);
                                     handle_users.insert(users1);
                                     users_idl.add(users_id);
                                 }
-
-//                            if (!users_idl.isEmpty()) {
-//                                int random_users_idl = random.nextInt(users_idl.size());
-//                                randomu = users_idl.get(random_users_idl);
-//                            }
 
                                 if (tableName.equals("course")) {
                                     course course = new course("mon hoc so " + 1, (id_start + i));
                                     handle_course.insert(course);
                                     course_idl.add(course.getCourse_id());
                                 }
-                                if (!course_idl.isEmpty()) {
-                                    int random_c_index = random.nextInt(course_idl.size());
-                                    randomc = course_idl.get(random_c_index);
-
-                                }
-
                                 if (tableName.equals("examination")) {
                                     examination examination = new examination((id_start + i), "ky thi " + (i + 1), "2023-12-24 1" + i + ":30:00", "" + i, randomc);
                                     handle_examination.insert(examination);
@@ -105,79 +113,93 @@ public class Main {
                                     int random_e_index = random.nextInt(examination_idl.size());
                                     randome = examination_idl.get(random_e_index);
                                 }
+
                                 if (tableName.equals("question")) {
                                     question question = new question((id_start + i), "1" + "+" + i, 10);
                                     handle_question.insert(question);
                                     question_idl.add(question.getQuestion_id());
                                 }
-                                if (!question_idl.isEmpty()) {
-                                    int random_q_index = random.nextInt(question_idl.size());
-                                    randomq = question_idl.get(random_q_index);
+
+                                x = question_idl.size(); // Số lần lặp của vòng 1
+                                y = 4; // Số lần lặp của vòng 2
+                                String rd_vl = "";
+
+                                if (tableName.equals("answer")) {
+                                    arrays = new int[x][y];
+                                    for (int idqr : question_idl) {
+                                        //moi mã đó sẽ có 4 câu hỏi được thêm và chỉ có 1 đáp án đúng
+                                        List<String> a1 = new ArrayList<>();
+                                        a1.add("dung");
+                                        a1.add("sai");
+                                        int demrs = 0, demvl = 0;
+
+                                        for (int j = 0; j < 4; j++) {
+                                            // for
+                                            int a11 = random.nextInt(a1.size());
+                                            rd_vl = a1.get(a11);
+                                            if (rd_vl.equals("dung") && demvl == 0) {
+                                                answer answer = new answer((id_start + increase_value - 1), "1" + increase_value, "dung", idqr);
+                                                handle_answer.insert(answer);
+                                                answer_idl.add(answer.getAnswer_id());
+                                                demvl++;
+                                                arrays[i11][j] = id_start + increase_value - 1;
+                                                increase_value++;
+                                                continue;
+                                            } else {
+                                                answer answer = new answer((id_start + increase_value - 1), "1" + increase_value, "sai", idqr);
+                                                handle_answer.insert(answer);
+                                                answer_idl.add(answer.getAnswer_id());
+                                                arrays[i11][j] = id_start + increase_value - 1;
+
+                                                increase_value++;
+                                                demrs++;
+                                            }
+                                            if (demrs == 3 && demvl == 0) {
+                                                answer answer = new answer((id_start + increase_value - 1), "1" + increase_value, "dung", idqr);
+                                                handle_answer.insert(answer);
+                                                arrays[i11][j] = id_start + increase_value - 1;
+                                                increase_value++;
+                                                answer_idl.add(answer.getAnswer_id());
+                                                break;
+                                            }
+                                        }
+                                        i11++;
+                                    }
                                 }
 
-                                String rd_vl = "";
-                                if (tableName.equals("answer")) {
-                                    List<String> a1 = new ArrayList<>();
-                                    a1.add("dung");
-                                    a1.add("sai");
-                                    int a11 = random.nextInt(a1.size());
-                                    rd_vl = a1.get(a11);
-                                    answer answer = new answer((id_start + i), "1" + i, rd_vl, randomq);
-                                    handle_answer.insert(answer);
-                                    answer_idl.add(answer.getAnswer_id());
-                                }
+
                                 if (!answer_idl.isEmpty()) {
                                     int random_a_index = random.nextInt(answer_idl.size());
                                     randoma = answer_idl.get(random_a_index);
                                 }
-
+                                // câu trả lời mỗi thí sinh phải trả lời 10 câu hỏi mỗi câu có 1 đáp án tương ứng
                                 if (tableName.equals("users_reply")) {
+                                    // Duyệt qua từng hàng
+                                    for (int i1 = 0; i1 < 10; i1++) {
+                                        // Duyệt qua từng cột trong hàng i
+                                        for (int j1 = 0; j1 < 4; j1++) {
+                                            System.out.print(arrays[i1][j1] + " ");
+                                        }
+                                        System.out.println(); // Xuống dòng sau khi in hết cột trong hàng i
+                                    }
                                     // sử lý sao cho các chuỗi random không trùng nhau
-                                    System.out.println(numberofline);
-                                    if (!users_idl.isEmpty()) {
-                                        int random_users_idl = random.nextInt(users_idl.size());
-                                        randomu = users_idl.get(random_users_idl);
-                                        a[i] = randomu;
-                                    }
-                                    if (!question_idl.isEmpty()) {
-                                        int random_q_index = random.nextInt(question_idl.size());
-                                        randomq = question_idl.get(random_q_index);
-                                        b[i] = randomq;
-                                    }
-                                    if (!answer_idl.isEmpty()) {
-                                        int random_a_index = random.nextInt(answer_idl.size());
-                                        randoma = answer_idl.get(random_a_index);
-                                        c[i] = randoma;
-                                    }
-                                    System.out.println(a[i] + "-" + b[i]+"-"+c[i]);
-                                    if (i == 0) {
-                                        if (!users_idl.isEmpty() && !question_idl.isEmpty() && !answer_idl.isEmpty()) {
-                                            users_reply ur = new users_reply((id_start + i), randomu, randomq, randoma);
-                                            handle_ur.insert(ur);
-                                        }
-                                    } else {
-                                        int dem = 0;
-                                        for (int j = i - 1; j >= 0; j--) {
-                                            if (i > 0) {
-                                                if (a[i] != a[j] || b[i] != b[j] || c[i] != c[j]) {
-                                                    dem++;
-                                                } else {
-                                                    System.out.println ("số random bị trùng lặp");
-                                                    break;
-                                                }
-                                                if (dem == i) {
-                                                    if (!users_idl.isEmpty() && !question_idl.isEmpty() && !answer_idl.isEmpty()) {
-                                                        users_reply ur = new users_reply(id_start + increase_value, randomu, randomq, randoma);
-                                                        handle_ur.insert(ur);
-                                                        increase_value++;
-                                                    }
-                                                }
+
+                                    for (int usersl : users_idl) {
+                                        int i2 = 0;
+                                        for (int qsl : question_idl) {
+                                            if (!users_idl.isEmpty() && !question_idl.isEmpty() && !answer_idl.isEmpty()) {
+                                                int randomIndex = random.nextInt(arrays[i2].length);
+                                                int randomElement = arrays[i2][randomIndex];
+                                                users_reply ur = new users_reply((id_start + increase_value), usersl, qsl, randomElement);
+                                                increase_value++;
+                                                handle_ur.insert(ur);
                                             }
+                                            i2++;
+
                                         }
                                     }
+                                    if (tableName.equals("users_reply")) break;
                                 }
-
-
                                 if (tableName.equals("examination_nn_question")) {
                                     // sử lý sao cho các chuỗi random không trùng nhau
                                     System.out.println(numberofline);
@@ -219,7 +241,6 @@ public class Main {
                                         }
                                     }
                                 }
-
                                 if (tableName.equals("users_nn_course")) {
                                     // sử lý sao cho các chuỗi random không trùng nhau
                                     System.out.println(numberofline);
@@ -261,6 +282,7 @@ public class Main {
                                     }
                                 }
                             }
+                            //
                         } else {
                             if (tableName.equals("users")) {
 
@@ -370,11 +392,12 @@ public class Main {
                         chose1 = sc.nextInt();
                         sc.nextLine();
                     } while (chose1 == 1);
-                }catch (ArithmeticException e){
-                    System.out.println("Error");
+                } catch (InputMismatchException e) {
+                    System.out.print(e.getMessage());
                 }
+
             }
+
         }
-//
     }
 }

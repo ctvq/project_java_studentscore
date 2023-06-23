@@ -25,7 +25,7 @@ public class Examination_nn_QuestionDAO implements DAOinterface<examination_nn_q
             int kq =  statement.executeUpdate(sql);
             if(kq!=0) System.out.println("Update successfully !");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         conn.close();
         return 0;

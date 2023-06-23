@@ -26,7 +26,7 @@ public class AnswerDAO implements DAOinterface<answer> {
             int kq =  statement.executeUpdate(sql);
             if(kq!=0) System.out.println("Update successfully !");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         conn.close();
         return 0;
